@@ -52,7 +52,7 @@ class Room:
     def __init__(self):
         self.vars = {SEND: "0000", RECV: "0000", STATE: "0"}
         self.clients = set()
-        self.last_send_seq = "0000"
+        self.last_send_value = ""
         self.recv_seq = 0
         self.history = []
 
@@ -151,9 +151,9 @@ async def show(room, text, color, align):
 
 async def handle_send(room, value):
     seq, sep, text = value.partition("|")
-    if not sep or seq == room.last_send_seq:
+    if not sep or value == room.last_send_value:
         return
-    room.last_send_seq = seq
+    room.last_send_value = value
     text = text.strip()
     if not text:
         return

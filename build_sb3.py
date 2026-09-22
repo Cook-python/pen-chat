@@ -147,8 +147,8 @@ b.link([
         ifb(gt(length_(answer()), 0), [
             changev("送信連番", 1),
             setcv(SEND, join_(join_(var("送信連番"), "|"), answer())),
-            until_(eq(cvar(STATE), 1), []),
-            until_(eq(cvar(STATE), 0), []),
+            until_(eq(cvar(STATE), 1), [wait_(0.05)]),
+            until_(eq(cvar(STATE), 0), [wait_(0.05)]),
         ]),
     ]),
 ])

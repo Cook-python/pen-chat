@@ -10,3 +10,5 @@ services:
         sync: false
       - key: PEN_CHAT_MODEL
         value: qwen/qwen3.8-27b
+      - key: PEN_CHAT_FONT
+        value: NotoSansJP-Regular.ttf

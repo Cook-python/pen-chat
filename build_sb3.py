@@ -1,7 +1,4 @@
-import sys
-
-SKILL = "/root/.claude/skills/synced/aef585e6-f469-4d32-94f6-dcdfd3ff63c8_682d187c-6fb4-436c-a725-b72b3d199bc4/sb3-builder/scripts"
-sys.path.insert(0, SKILL)
+import os
 
 from sb3lib import *
 from sb3lib import b, A, SNUM, STXT, SWHOLE, SIDX
@@ -81,9 +78,9 @@ define("再描画", [], [
     penup(),
     pencolor(item("PAL", 1)),
     pensize(400),
-    gotoxy(-240, 0),
+    gotoxy(-440, 0),
     pendown(),
-    gotoxy(240, 0),
+    gotoxy(440, 0),
     penup(),
     pensize(1),
     setv("idx", 1),
@@ -154,7 +151,7 @@ b.link([
     ]),
 ])
 
-print(save("/mnt/user-data/outputs/pen_chat.sb3",
+print(save(os.path.join(os.path.dirname(__file__), "pen_chat.sb3"),
            sprite_name="端末",
            extensions=["pen"],
            list_values={"PAL": PALETTE}))

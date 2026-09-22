@@ -47,7 +47,7 @@ define("古い行を消す", [], [
     dell("ROWC", 1),
     dell("ROWN", 1),
     changev("行数", -1),
-], x=0, y=0)
+], warp=False, x=0, y=0)
 
 define("受信を取り込む", [], [
     setv("本文", cvar(RECV)),
@@ -71,7 +71,7 @@ define("受信を取り込む", [], [
         ]),
         until_(not_(gt(var("行数"), var("最大行"))), [call("古い行を消す")]),
     ]),
-], x=0, y=260)
+], warp=False, x=0, y=260)
 
 define("再描画", [], [
     penclear(),
@@ -107,7 +107,7 @@ define("再描画", [], [
         gotoxy(add_(-224, mod_(round_(mul_(timer(), 150)), 449)), -160),
         penup(),
     ]),
-], x=0, y=560)
+], warp=False, x=0, y=560)
 
 b.link([
     whenflag(x=400, y=0),

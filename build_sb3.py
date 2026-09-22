@@ -35,8 +35,8 @@ def num(start, width, src):
 
 declare(
     variables=["受信前", "送信連番", "本文", "長さ", "i", "rc", "行色",
-               "行数", "r", "idx", "上端", "残り", "消去数", "状態前",
-               "行高", "最大行", "基準Y", "seg", "sy", "現在受信", "現在状態"],
+               "行数", "r", "idx", "上端", "残り", "消去数",
+               "行高", "最大行", "基準Y", "sy"],
     lists=["SEGY", "SEGX1", "SEGX2", "ROWC", "ROWN", "PAL"],
     cloud=[SEND, RECV, STATE],
 )
@@ -50,7 +50,7 @@ define("古い行を消す", [], [
 ], x=0, y=0)
 
 define("受信を取り込む", [], [
-    setv("本文", var("現在受信")),
+    setv("本文", cvar(RECV)),
     setv("長さ", length_(var("本文"))),
     setv("i", 5),
     until_(gt(var("i"), var("長さ")), [
@@ -99,15 +99,16 @@ define("再描画", [], [
         ]),
         changev("r", 1),
     ]),
-    ifb(eq(var("現在状態"), 1), [
-        pencolor(item("PAL", 5)),
-        pensize(6),
-        gotoxy(-224, -160),
-        pendown(),
-        gotoxy(add_(-224, mod_(round_(mul_(timer(), 150)), 449)), -160),
-        penup(),
-    ]),
 ], x=0, y=560)
+
+define("進捗バー", [], [
+    pencolor(item("PAL", 5)),
+    pensize(6),
+    gotoxy(-224, -160),
+    pendown(),
+    gotoxy(add_(-224, mod_(round_(mul_(timer(), 150)), 449)), -160),
+    penup(),
+], x=0, y=700)
 
 b.link([
     whenflag(x=400, y=0),
@@ -117,30 +118,31 @@ b.link([
     setv("基準Y", 170),
     setv("行数", 0),
     setv("送信連番", 0),
-    resettimer(),
     dellall("SEGY"), dellall("SEGX1"), dellall("SEGX2"),
     dellall("ROWC"), dellall("ROWN"),
-    setv("現在受信", cvar(RECV)),
-    setv("現在状態", cvar(STATE)),
-    setv("受信前", var("現在受信")),
-    setv("状態前", var("現在状態")),
+    setv("受信前", cvar(RECV)),
     penclear(),
     penup(),
     forever_([
-        setv("現在受信", cvar(RECV)),
-        setv("現在状態", cvar(STATE)),
-        ifb(not_(eq(var("現在受信"), var("受信前"))), [
-            setv("受信前", var("現在受信")),
-            call("受信を取り込む"),
+        until_(not_(eq(cvar(RECV), var("受信前"))), [wait_(0.05)]),
+        setv("受信前", cvar(RECV)),
+        call("受信を取り込む"),
+        call("再描画"),
+    ]),
+])
+
+b.link([
+    whenflag(x=400, y=560),
+    forever_([
+        until_(eq(cvar(STATE), 1), [wait_(0.05)]),
+        call("再描画"),
+        call("進捗バー"),
+        until_(not_(eq(cvar(STATE), 1)), [
             call("再描画"),
+            call("進捗バー"),
+            wait_(0.03),
         ]),
-        ifb(not_(eq(var("現在状態"), var("状態前"))), [
-            setv("状態前", var("現在状態")),
-            call("再描画"),
-        ]),
-        ifb(eq(var("現在状態"), 1), [
-            call("再描画"),
-        ]),
+        call("再描画"),
     ]),
 ])
 

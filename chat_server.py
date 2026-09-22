@@ -29,9 +29,11 @@ MAX_REPLY_CHARS = int(os.environ.get("PEN_CHAT_MAX_REPLY_CHARS", "300"))
 HISTORY_TURNS = int(os.environ.get("PEN_CHAT_HISTORY_TURNS", "4"))
 
 SYSTEM_PROMPT = (
-    "あなたはScratchのステージにペンで文字を描いて表示する小さな端末の中身です。"
+    "あなたは気さくな会話相手です。"
     "返答は日本語の口語で、2〜3文程度の短い文章にまとめてください。"
     "箇条書きや記号による装飾、コードブロックは使わないでください。"
+    "自分がどうやって表示されているか(画面、ペン、端末など)には一切触れず、"
+    "普通に会話の内容だけ答えてください。"
 )
 
 SENTENCE_END = "。！？!?\n"

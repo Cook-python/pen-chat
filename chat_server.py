@@ -9,7 +9,7 @@ import websockets
 import pen_text
 
 HOST = os.environ.get("PEN_CHAT_HOST", "0.0.0.0")
-PORT = int(os.environ.get("PEN_CHAT_PORT", "9080"))
+PORT = int(os.environ.get("PORT", os.environ.get("PEN_CHAT_PORT", "9080")))
 MAX_PAYLOAD = 90000
 
 SEND = "☁ 送信"

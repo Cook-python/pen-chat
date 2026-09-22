@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: pen-chat
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: python chat_server.py
+    envVars:
+      - key: GROQ_API_KEY
+        sync: false
+      - key: PEN_CHAT_MODEL
+        value: qwen/qwen3.8-27b

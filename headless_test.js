@@ -46,7 +46,7 @@ async function main() {
     report('after answering ask (should be waiting for 状態=1)');
 
     state.value = '1';
-    recv.value = '00010001108106200';
+    recv.value = 'R00010001108106200';
     await step(5);
     report('while thinking, echo pushed to 受信');
 
@@ -54,7 +54,7 @@ async function main() {
     await step(5);
     console.log('timer after ~0.5s real time =', vm.runtime.ioDevices.clock.projectTimer());
 
-    recv.value = '0002000220301010003110200';
+    recv.value = 'R0002000220301010003110200';
     await step(5);
     report('reply chunk pushed to 受信 (still 状態=1)');
 

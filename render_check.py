@@ -27,7 +27,7 @@ def main():
 
     row_index = 0
     for value in recv_values:
-        payload = value[4:]
+        payload = value[5:]
         rows = pen_text.decode(payload)
         for color_index, runs in rows:
             y_top = TOP_Y + row_index * ROW_HEIGHT

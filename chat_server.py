@@ -145,7 +145,7 @@ async def show(room, text, color, align):
     if len(payload) > MAX_PAYLOAD:
         payload = payload[:0]
     room.recv_seq = (room.recv_seq + 1) % 10000
-    await set_var(room, RECV, "%04d%s" % (room.recv_seq, payload))
+    await set_var(room, RECV, "R%04d%s" % (room.recv_seq, payload))
     await asyncio.sleep(0.15)
 
 

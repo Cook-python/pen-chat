@@ -52,7 +52,7 @@ define("古い行を消す", [], [
 define("受信を取り込む", [], [
     setv("本文", cvar(RECV)),
     setv("長さ", length_(var("本文"))),
-    setv("i", 5),
+    setv("i", 6),
     until_(gt(var("i"), var("長さ")), [
         setv("rc", num("i", 4, "本文")),
         changev("i", 4),

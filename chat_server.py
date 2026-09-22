@@ -159,6 +159,7 @@ async def handle_send(room, value):
         return
     print("<<", text)
     await show(room, text, COLOR_USER, "right")
+    await asyncio.sleep(0.35)
     await set_var(room, STATE, "1")
     reply = await generate_reply(room, text)
     if reply is None:

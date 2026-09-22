@@ -50,6 +50,10 @@ async function main() {
     await step(5);
     report('while thinking, echo pushed to 受信');
 
+    await new Promise(r => setTimeout(r, 500));
+    await step(5);
+    console.log('timer after ~0.5s real time =', vm.runtime.ioDevices.clock.projectTimer());
+
     recv.value = '0002000220301010003110200';
     await step(5);
     report('reply chunk pushed to 受信 (still 状態=1)');

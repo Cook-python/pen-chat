@@ -101,14 +101,11 @@ define("再描画", [], [
     ]),
     ifb(eq(cvar(STATE), 1), [
         pencolor(item("PAL", 5)),
-        pensize(4),
-        setv("seg", 0),
-        repeat_(3, [
-            gotoxy(add_(-224, mul_(var("seg"), 10)), -160),
-            pendown(),
-            penup(),
-            changev("seg", 1),
-        ]),
+        pensize(6),
+        gotoxy(-224, -160),
+        pendown(),
+        gotoxy(add_(-224, mod_(round_(mul_(timer(), 150)), 449)), -160),
+        penup(),
     ]),
 ], x=0, y=560)
 
@@ -120,6 +117,7 @@ b.link([
     setv("基準Y", 170),
     setv("行数", 0),
     setv("送信連番", 0),
+    resettimer(),
     dellall("SEGY"), dellall("SEGX1"), dellall("SEGX2"),
     dellall("ROWC"), dellall("ROWN"),
     setv("受信前", cvar(RECV)),
@@ -134,6 +132,9 @@ b.link([
         ]),
         ifb(not_(eq(cvar(STATE), var("状態前"))), [
             setv("状態前", cvar(STATE)),
+            call("再描画"),
+        ]),
+        ifb(eq(cvar(STATE), 1), [
             call("再描画"),
         ]),
     ]),
